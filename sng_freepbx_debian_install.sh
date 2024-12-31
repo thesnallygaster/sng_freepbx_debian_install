@@ -37,7 +37,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-
 # Setup a sane PATH for script execution as root
 export PATH=$SANE_PATH
 
@@ -936,9 +935,6 @@ apt-get autoremove -y >> "$log"
 execution_time="$(($(date +%s) - start))"
 message "Execution time to install all the dependent packages : $execution_time s"
 
-
-
-
 setCurrentStep "Setting up folders and asterisk config"
 groupExists="$(getent group asterisk || echo '')"
 if [ "${groupExists}" = "" ]; then
@@ -1009,12 +1005,10 @@ hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)
 EOF
 fi
 
-
 # Setting apt configuration to always DO NOT overwrite existing configurations
 cat <<EOF >> /etc/apt/apt.conf.d/00freepbx
 DPkg::options { "--force-confdef"; "--force-confold"; }
 EOF
-
 
 #chown -R asterisk:asterisk /etc/ssl
 
@@ -1039,7 +1033,6 @@ for i in "${!FPBXPKGS[@]}"; do
 	pkg_install ${FPBXPKGS[$i]}
 done
 
-
 #Enabling freepbx.ini file
 setCurrentStep "Enabling modules."
 phpenmod freepbx
@@ -1052,7 +1045,6 @@ touch /etc/asterisk/extensions_override_freepbx.conf
 touch /etc/asterisk/extensions_additional.conf
 touch /etc/asterisk/extensions_custom.conf
 chown -R asterisk:asterisk /etc/asterisk
-
 
 if [ $nofpbx ] ; then
   message "Skipping FreePBX 17 installation due to nofreepbx option"
@@ -1175,9 +1167,7 @@ if [ ! $nofpbx ]; then
   done
 fi
 
-
 setCurrentStep "FreePBX 17 Installation finished successfully."
-
 
 ############ POST INSTALL VALIDATION ############################################
 # Commands for post-installation validation
