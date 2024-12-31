@@ -29,7 +29,6 @@ LOG_FOLDER="/var/log/pbx"
 LOG_FILE="${LOG_FOLDER}/freepbx17-install-$(date '+%Y.%m.%d-%H.%M.%S').log"
 log=$LOG_FILE
 SANE_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-DEBIAN_MIRROR="http://ftp.debian.org/debian"
 NPM_MIRROR=""
 DEBIAN_OS_VERSION=""
 
@@ -117,10 +116,6 @@ while [[ $# -gt 0 ]]; do
 		--nochrony)
 			nochrony=true
 			shift # past argument
-			;;
-		--debianmirror)
-			DEBIAN_MIRROR=$2
-			shift; shift # past argument
 			;;
     --npmmirror)
       NPM_MIRROR=$2
@@ -368,17 +363,6 @@ setup_repositories() {
 	fi
 
 	if [ -z "$noaac" ]; then
-	     # Add main Bookworm repo if missing
-	     REPO_LINE="deb $DEBIAN_MIRROR bookworm main non-free non-free-firmware"
-
-	     # Only add if the line doesn't already exist
-	     if ! grep -qsF "$REPO_LINE" "$REPO_FILE"; then
-		     echo "$REPO_LINE" | tee -a "$REPO_FILE" >> "$log"
-		     echo "Added Bookworm main repo: $REPO_LINE" >> "$log"
-	     else
-		     echo "Bookworm main repo already exists: $REPO_LINE" >> "$log"
-	     fi			
-
 	    # Fix current debian repo to point to bookworm
 	    fix_debian12_repo
 	    # Block Debian 13/Trixie update because currently FreePBX only supports Debian 12/Bookworm 
