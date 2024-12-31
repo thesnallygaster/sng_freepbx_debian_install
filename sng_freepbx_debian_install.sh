@@ -29,7 +29,6 @@ LOG_FOLDER="/var/log/pbx"
 LOG_FILE="${LOG_FOLDER}/freepbx17-install-$(date '+%Y.%m.%d-%H.%M.%S').log"
 log=$LOG_FILE
 SANE_PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-DEBIAN_MIRROR="http://ftp.debian.org/debian"
 NPM_MIRROR=""
 
 # Check for root privileges
@@ -86,10 +85,6 @@ while [[ $# -gt 0 ]]; do
 		--nochrony)
 			nochrony=true
 			shift # past argument
-			;;
-		--debianmirror)
-			DEBIAN_MIRROR=$2
-			shift; shift # past argument
 			;;
     --npmmirror)
       NPM_MIRROR=$2
@@ -273,10 +268,6 @@ setup_repositories() {
 	else
 		add-apt-repository -y -S "deb [ arch=amd64 ] http://deb.freepbx.org/freepbx17-prod bookworm main" >> "$log"
 		add-apt-repository -y -S "deb [ arch=amd64 ] http://deb.freepbx.org/freepbx17-prod bookworm main" >> "$log"
-	fi
-
-	if [ ! $noaac ] ; then
-		add-apt-repository -y -S "deb $DEBIAN_MIRROR stable main non-free non-free-firmware" >> "$log"
 	fi
 
 	setCurrentStep "Setting up Sangoma repository"
