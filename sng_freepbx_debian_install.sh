@@ -1111,9 +1111,6 @@ if [ ! $nofpbx ] ; then
   a2ensite default-ssl >> "$log"
 fi
 
-#Setting postfix size to 100MB
-postconf -e message_size_limit=102400000
-
 # Disable expose_php for provide less information to attacker
 sed -i 's/\(^expose_php = \).*/\1Off/' /etc/php/${PHPVERSION}/apache2/php.ini
 
