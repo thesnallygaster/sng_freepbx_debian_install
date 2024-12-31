@@ -922,7 +922,6 @@ DEPPRODPKGS=(
 	"zip"
 	"incron"
 	"wget"
-	"vim"
 	"openssh-server"
 	"rsync"
 	"mariadb-server"
@@ -1191,36 +1190,6 @@ if [ "0" = "${isScreenRcAdapted}" ]; then
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B}%Y-%m-%d %{W}%c %{g}]'
 # FreePBX 17 changes - end
-EOF
-fi
-
-
-# Setting VIM configuration for mouse copy paste
-isVimRcAdapted=$(grep "FreePBX 17 changes" /etc/vim/vimrc.local |wc -l)
-if [ "0" = "${isVimRcAdapted}" ]; then
-	cat <<EOF >> /etc/vim/vimrc.local
-" FreePBX 17 changes - begin
-" This file loads the default vim options at the beginning and prevents
-" that they are being loaded again later. All other options that will be set,
-" are added, or overwrite the default settings. Add as many options as you
-" whish at the end of this file.
-
-" Load the defaults
-source \$VIMRUNTIME/defaults.vim
-
-" Prevent the defaults from being loaded again later, if the user doesn't
-" have a local vimrc (~/.vimrc)
-let skip_defaults_vim = 1
-
-
-" Set more options (overwrites settings from /usr/share/vim/vim80/defaults.vim)
-" Add as many options as you whish
-
-" Set the mouse mode to 'r'
-if has('mouse')
-  set mouse=r
-endif
-" FreePBX 17 changes - end
 EOF
 fi
 
