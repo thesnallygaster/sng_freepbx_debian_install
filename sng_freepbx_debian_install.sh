@@ -493,7 +493,7 @@ refresh_signatures() {
 }
 
 check_services() {
-    services=("fail2ban" "iptables")
+    services=("iptables")
     for service in "${services[@]}"; do
         service_status=$(systemctl is-active "$service")
         if [[ "$service_status" != "active" ]]; then
@@ -1065,9 +1065,6 @@ touch /etc/asterisk/extensions_override_freepbx.conf
 touch /etc/asterisk/extensions_additional.conf
 touch /etc/asterisk/extensions_custom.conf
 chown -R asterisk:asterisk /etc/asterisk
-
-setCurrentStep "Restarting fail2ban"
-systemctl restart fail2ban  >> $log
 
 
 if [ $nofpbx ] ; then
