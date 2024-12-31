@@ -1080,6 +1080,10 @@ else
     # Uninstall ionCube loader required for commercial modules and to install the freepbx17 package
     message "Uninstalling ioncube-loader-82"
     apt-get purge -y ioncube-loader-82 >> "$log"
+
+    message "Umodifying apache2.service"
+    sed 's/.*ExecStartPre=\/var\/www\/html\/admin\/modules\/sysadmin\/hooks\/check_ip_and_start_apache.sh//g' /lib/systemd/system/apache2.service > /etc/systemd/system/apache2.service
+    systemctl daemon-reload
   fi
 fi
 
