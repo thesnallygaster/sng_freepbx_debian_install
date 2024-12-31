@@ -64,7 +64,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-
 # Setup a sane PATH for script execution as root
 export PATH=$SANE_PATH
 
@@ -1085,9 +1084,6 @@ apt-get autoremove -y >> "$log"
 execution_time="$(($(date +%s) - start))"
 message "Execution time to install all the dependent packages : $execution_time s"
 
-
-
-
 setCurrentStep "Setting up folders and asterisk config"
 groupExists="$(getent group asterisk || echo '')"
 if [ "${groupExists}" = "" ]; then
@@ -1158,7 +1154,6 @@ hardstatus string '%{= kG}[ %{G}%H %{g}][%= %{=kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)
 EOF
 fi
 
-
 # Setting apt configuration to always DO NOT overwrite existing configurations
 aptNoOverwrite=$(grep "DPkg::options { \"--force-confdef\"; \"--force-confold\"; }" /etc/apt/apt.conf.d/00freepbx |wc -l)
 if [ "0" = "${aptNoOverwrite}" ]; then
@@ -1166,7 +1161,6 @@ if [ "0" = "${aptNoOverwrite}" ]; then
 DPkg::options { "--force-confdef"; "--force-confold"; }
 EOF
 fi
-
 
 #chown -R asterisk:asterisk /etc/ssl
 
@@ -1190,7 +1184,6 @@ FPBXPKGS=("sysadmin17"
 for i in "${!FPBXPKGS[@]}"; do
 	pkg_install "${FPBXPKGS[$i]}"
 done
-
 
 #Enabling freepbx.ini file
 setCurrentStep "Enabling modules."
@@ -1329,9 +1322,7 @@ if [ ! "$nofpbx" ]; then
   done
 fi
 
-
 setCurrentStep "FreePBX 17 Installation finished successfully."
-
 
 ############ POST INSTALL VALIDATION ############################################
 # Commands for post-installation validation
